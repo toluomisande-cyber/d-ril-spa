@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>D-ril Spa | Massage, Facials, Nails, Asian Bath and Waxing</title>
+<meta name="description" content="D-ril Spa offers massage, facials, pedicure and manicure, Asian bath and full body wax. Book online or call +234 803 352 4850.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #0E3B22; --green: #0B9A4A; --lime: #B8D43C;
+    --mist: #F6F8F1; --ink: #1F2A24; --line: #D9E2D3; --white: #FFFFFF;
+    --head: "Chakra Petch", "Trebuchet MS", sans-serif;
+    --body: "Nunito Sans", "Segoe UI", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--body); color: var(--ink); background: var(--mist); line-height: 1.6; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+  h1, h2, h3 { font-family: var(--head); line-height: 1.15; color: var(--forest); }
+  h2 { font-size: clamp(1.6rem, 5vw, 2.2rem); margin-bottom: 10px; }
+  section { padding: 56px 0; }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px;
+    font-family: var(--head); font-weight: 600; font-size: 1rem; border-radius: 10px; border: 2px solid transparent;
+    text-decoration: none; cursor: pointer; transition: background-color .15s, border-color .15s; }
+  .btn-lime { background: var(--lime); color: var(--forest); }
+  .btn-lime:hover { background: #cbe254; }
+  .btn-green { background: var(--green); color: var(--white); }
+  .btn-green:hover { background: #09853f; }
+  .btn-line { border-color: var(--white); color: var(--white); }
+  .btn-line:hover { background: rgba(255,255,255,.12); }
+  .btn-whatsapp { background: #25D366; color: #072213; font-weight: 700; }
+  .btn-whatsapp:hover { background: #20bd5a; color: #072213; }
+
+  /* Scroll Progress Bar */
+  #scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--lime), #25D366);
+    z-index: 100;
+    transition: width 0.08s ease-out;
+  }
+
+  /* Header */
+  header {
+    background: rgba(246, 248, 241, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    transition: box-shadow .25s ease, background-color .25s ease;
+  }
+  header.scrolled {
+    box-shadow: 0 4px 20px rgba(14, 59, 34, 0.08);
+    background: rgba(246, 248, 241, 0.98);
+  }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 64px; }
+  .bar img { height: 44px; width: auto; mix-blend-mode: multiply; }
+  .brand-wrap { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand-text { font-family: var(--head); font-weight: 700; font-size: 1.25rem; color: var(--forest); }
+  nav { display: none; gap: 24px; align-items: center; }
+  nav a { text-decoration: none; font-weight: 600; }
+  nav a:hover { color: var(--green); }
+  .bar .btn { min-height: 42px; padding: 0 16px; }
+
+  /* Hero: Full-Screen Fit */
+  .hero {
+    position: relative;
+    color: var(--white);
+    min-height: calc(100vh - 64px);
+    min-height: calc(100dvh - 64px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--forest);
+    overflow: hidden;
+  }
+  .hero img.bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: .38;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(14, 59, 34, 0.88) 0%, rgba(7, 34, 19, 0.72) 100%);
+    pointer-events: none;
+  }
+  .hero .wrap {
+    position: relative;
+    z-index: 1;
+    padding-top: 56px;
+    padding-bottom: 56px;
+    width: 100%;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--lime);
+    background: rgba(184, 212, 60, 0.15);
+    border: 1px solid rgba(184, 212, 60, 0.35);
+    padding: 6px 14px;
+    border-radius: 9999px;
+    margin-bottom: 16px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .hero-loc-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 6px 14px;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    color: #E2ECE5;
+    margin-bottom: 24px;
+    max-width: 100%;
+  }
+  .hero-loc-pill svg { color: var(--lime); flex-shrink: 0; }
+  .hero h1 {
+    color: var(--white);
+    font-size: clamp(2.4rem, 7.5vw, 4.4rem);
+    max-width: 15ch;
+    margin-bottom: 18px;
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+  .hero p {
+    max-width: 52ch;
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    line-height: 1.6;
+    margin-bottom: 28px;
+    color: #E2ECE5;
+    text-wrap: balance;
+  }
+  .hero .ctas { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+
+  /* Services */
+  .services { display: grid; gap: 0; margin-top: 24px; border-top: 2px solid var(--forest); }
+  .svc {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+    transition: background-color .2s ease, transform .2s ease;
+  }
+  .svc:hover {
+    background-color: rgba(14, 59, 34, 0.02);
+  }
+  .svc-top { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .svc-title-wrap { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .svc h3 { font-size: 1.28rem; font-weight: 700; color: var(--forest); }
+  .svc-tag { font-size: 0.72rem; font-weight: 700; background: rgba(11, 154, 74, 0.12); color: var(--green); padding: 3px 10px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .svc-price { font-family: var(--head); font-weight: 700; color: var(--forest); font-size: 1.25rem; }
+  .svc-desc-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .svc p { max-width: 65ch; color: #4B5A51; font-size: 0.98rem; }
+  .svc .btn-book-sm { font-size: 0.85rem; font-weight: 700; color: var(--green); border: 1px solid var(--green); padding: 6px 16px; border-radius: 8px; text-decoration: none; transition: all .15s; }
+  .svc .btn-book-sm:hover { background: var(--green); color: #fff; transform: translateY(-1px); }
+  .services-cta { margin-top: 32px; }
+
+  /* Gallery */
+  .gallery-wrap { background: var(--white); }
+  .gallery { columns: 1; column-gap: 16px; margin-top: 24px; }
+  .gallery figure { break-inside: avoid; margin-bottom: 16px; }
+  .gallery button { display: block; width: 100%; border: 0; padding: 0; background: none; cursor: zoom-in; border-radius: 12px; overflow: hidden; }
+  .gallery img { width: 100%; height: auto; transition: transform .3s ease; }
+  .gallery button:hover img { transform: scale(1.03); }
+  .gallery figcaption { font-size: .95rem; margin-top: 6px; color: #55645B; }
+
+  dialog { border: 0; border-radius: 12px; padding: 0; max-width: min(92vw, 900px); background: var(--forest); }
+  dialog::backdrop { background: rgba(14,59,34,.85); }
+  dialog img { max-height: 82vh; width: auto; margin: 0 auto; }
+  dialog form { text-align: right; padding: 8px; }
+  dialog button { background: var(--lime); color: var(--forest); border: 0; border-radius: 8px; min-height: 40px; padding: 0 16px; font-family: var(--head); font-weight: 600; cursor: pointer; }
+
+  /* Visit & Location Showcase */
+  .visit { background: var(--forest); color: var(--white); padding: 72px 0; }
+  .visit h2 { color: var(--white); margin-bottom: 10px; }
+  .location-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 28px;
+    margin: 28px 0;
+    display: grid;
+    gap: 20px;
+    max-width: 720px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .loc-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .loc-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(184, 212, 60, 0.16);
+    color: var(--lime);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .loc-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--lime);
+    margin-bottom: 4px;
+  }
+  .loc-val {
+    font-size: 1.05rem;
+    color: #F1F6F3;
+    line-height: 1.5;
+  }
+  .loc-val a {
+    color: var(--white);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .loc-val a:hover { color: var(--lime); }
+  .visit .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+
+  /* Footer */
+  footer {
+    background: #072213;
+    color: #BFD3C5;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 44px 0 28px;
+    font-size: 0.92rem;
+  }
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 28px;
+  }
+  .footer-brand-title {
+    font-family: var(--head);
+    font-weight: 700;
+    font-size: 1.35rem;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .footer-address {
+    color: #A3BDAC;
+    max-width: 45ch;
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+  .footer-nav {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .footer-nav a {
+    color: #CDE0D4;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color .15s;
+  }
+  .footer-nav a:hover { color: var(--lime); }
+  .footer-copy {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.85rem;
+    color: #8CA996;
+  }
+
+  /* Continuous Seamless Infinite Ticker - Runs All The Time */
+  .marquee-track {
+    background: #072213;
+    color: var(--lime);
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+    user-select: none;
+    border-top: 1px solid rgba(184, 212, 60, 0.25);
+    border-bottom: 1px solid rgba(184, 212, 60, 0.25);
+    padding: 14px 0;
+    font-family: var(--head);
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    width: 100%;
+    position: relative;
+  }
+  .marquee-track-reverse {
+    background: #051A0E;
+    border-top: 1px solid rgba(184, 212, 60, 0.2);
+    border-bottom: 1px solid rgba(184, 212, 60, 0.2);
+    color: #F6F8F1;
+  }
+  .marquee-track-reverse .m-dot {
+    color: var(--lime);
+  }
+  .marquee-group {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding-right: 24px;
+    min-width: 100%;
+    animation: marqueeContinuousLeft 30s linear infinite;
+    will-change: transform;
+  }
+  .marquee-track-reverse .marquee-group {
+    animation: marqueeContinuousRight 32s linear infinite;
+  }
+  @keyframes marqueeContinuousLeft {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-100%, 0, 0);
+    }
+  }
+  @keyframes marqueeContinuousRight {
+    0% {
+      transform: translate3d(-100%, 0, 0);
+    }
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+  /* Ensure animation stays running all the time without stopping */
+  .marquee-track:hover .marquee-group {
+    animation-play-state: running !important;
+  }
+  .m-dot { color: #25D366; opacity: 0.85; }
+
+  /* Continuous Ambient Animations - Active All The Time */
+  @keyframes ambientFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+  @keyframes livePulseDot {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(37, 211, 102, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+  }
+  @keyframes subtlePillPulse {
+    0%, 100% { border-color: rgba(184, 212, 60, 0.35); box-shadow: 0 0 0 0 rgba(184, 212, 60, 0.2); }
+    50% { border-color: rgba(184, 212, 60, 0.7); box-shadow: 0 0 14px rgba(184, 212, 60, 0.25); }
+  }
+  .hero-loc-pill {
+    animation: ambientFloat 4.5s ease-in-out infinite;
+  }
+  .hero-badge {
+    animation: subtlePillPulse 3s ease-in-out infinite;
+  }
+  .live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #25D366;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 6px;
+    animation: livePulseDot 2s infinite;
+  }
+
+  /* Scroll Animations - Continuous on Every Scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-scale {
+    opacity: 0;
+    transform: scale(0.94) translateY(20px);
+    transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  .reveal-scale.reveal-visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  /* Back to Top floating button */
+  #back-to-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--forest);
+    color: var(--lime);
+    border: 2px solid rgba(184, 212, 60, 0.45);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(16px);
+    transition: opacity .25s ease, transform .25s ease, visibility .25s ease, background-color .2s ease;
+    z-index: 90;
+  }
+  #back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  #back-to-top:hover {
+    background: var(--green);
+    color: #fff;
+    transform: translateY(-3px);
+  }
+
+  @media (min-width: 720px) {
+    nav { display: flex; }
+    .gallery { columns: 2; }
+  }
+  @media (min-width: 980px) { .gallery { columns: 3; } }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; scroll-behavior: auto !important; }
+    .reveal, .reveal-scale { opacity: 1 !important; transform: none !important; }
+    .marquee-content { animation: none !important; }
+  }
+</style>
+</head>
+<body>
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<header>
+  <div class="wrap bar">
+    <a href="index.html" class="brand-wrap" aria-label="D-ril Spa home">
+      <img src="images/logo.jpg" alt="D-ril Spa" width="44" height="44">
+      <span class="brand-text">D-ril Spa</span>
+    </a>
+    <nav aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="#services">Services</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#visit">Visit us</a>
+      <a href="tel:+2348033524850" style="color: var(--forest);">+234 803 352 4850</a>
+    </nav>
+    <a class="btn btn-green" href="booking.html">Book now</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <img class="bg" src="images/reception.jpg" alt="D-ril Spa reception" fetchpriority="high">
+    <div class="wrap">
+      <span class="hero-badge">Serenity &bull; Wellness &bull; Rejuvenation</span>
+      <h1>Your skin is an investment, not an expense.</h1>
+      <div class="hero-loc-pill">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        <span>11 Okunola Abass Street, Off favos, New Bodija, Ibadan</span>
+      </div>
+      <p>Massage, facials, nail care, Asian bath and waxing in a calm, clean space. Book your visit in under a minute.</p>
+      <div class="ctas">
+        <a class="btn btn-lime" href="booking.html">Book an appointment</a>
+        <a class="btn btn-whatsapp" href="https://wa.me/2348033524850" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.587 1.961.954 3.011.954l.002.001c3.182 0 5.77-2.587 5.771-5.766.001-1.543-.599-2.993-1.69-4.084-1.09-1.09-2.541-1.688-4.087-1.688zm7.32 4.095c.001 1.961-.762 3.805-2.148 5.191-1.387 1.387-3.231 2.15-5.191 2.15h-.002c-1.189 0-2.355-.32-3.374-.925l-3.736.98 1-3.64c-.663-1.066-1.013-2.298-1.012-3.562 0-3.649 2.97-6.619 6.621-6.619 1.768 0 3.431.689 4.68 1.939s1.94 2.912 1.94 4.681z"/></svg>
+          Chat on WhatsApp
+        </a>
+        <a class="btn btn-line" href="tel:+2348033524850">Call +234 803 352 4850</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Continuous Ambient Ticker Bar - Infinite & Runs All The Time -->
+  <div class="marquee-track" aria-label="Services & Spa Highlights">
+    <div class="marquee-group">
+      <span>Deep Cleanse Facial &bull; &#8358;15k</span><span class="m-dot">&bull;</span>
+      <span>Acne Facial &bull; &#8358;25k</span><span class="m-dot">&bull;</span>
+      <span>Hydra Facial &bull; &#8358;35k</span><span class="m-dot">&bull;</span>
+      <span>Asian Spa Bath &bull; &#8358;100k</span><span class="m-dot">&bull;</span>
+      <span>Honey Body Polish &bull; &#8358;50k</span><span class="m-dot">&bull;</span>
+      <span>Gem Anti-Aging &bull; &#8358;40k</span><span class="m-dot">&bull;</span>
+      <span>Dermabrasion Facial &bull; &#8358;25k</span><span class="m-dot">&bull;</span>
+      <span>Full Body Relaxation Massage</span><span class="m-dot">&bull;</span>
+      <span>Pedicure &amp; Manicure</span><span class="m-dot">&bull;</span>
+      <span>Full Body Wax</span><span class="m-dot">&bull;</span>
+      <span>11 Okunola Abass, Off favos, New Bodija, Ibadan</span><span class="m-dot">&bull;</span>
+      <span>Call +234 803 352 4850</span><span class="m-dot">&bull;</span>
+    </div>
+    <div class="marquee-group" aria-hidden="true">
+      <span>Deep Cleanse Facial &bull; &#8358;15k</span><span class="m-dot">&bull;</span>
+      <span>Acne Facial &bull; &#8358;25k</span><span class="m-dot">&bull;</span>
+      <span>Hydra Facial &bull; &#8358;35k</span><span class="m-dot">&bull;</span>
+      <span>Asian Spa Bath &bull; &#8358;100k</span><span class="m-dot">&bull;</span>
+      <span>Honey Body Polish &bull; &#8358;50k</span><span class="m-dot">&bull;</span>
+      <span>Gem Anti-Aging &bull; &#8358;40k</span><span class="m-dot">&bull;</span>
+      <span>Dermabrasion Facial &bull; &#8358;25k</span><span class="m-dot">&bull;</span>
+      <span>Full Body Relaxation Massage</span><span class="m-dot">&bull;</span>
+      <span>Pedicure &amp; Manicure</span><span class="m-dot">&bull;</span>
+      <span>Full Body Wax</span><span class="m-dot">&bull;</span>
+      <span>11 Okunola Abass, Off favos, New Bodija, Ibadan</span><span class="m-dot">&bull;</span>
+      <span>Call +234 803 352 4850</span><span class="m-dot">&bull;</span>
+    </div>
+  </div>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="reveal">
+        <h2>Treatments &amp; Pricing</h2>
+        <p>Customized skin therapies, luxury baths, and body rituals by certified therapists.</p>
+      </div>
+      <div class="services">
+        <!-- 1: Deep Cleanse Facial -->
+        <div class="svc reveal">
+          <div class="svc-top">
+            <div class="svc-title-wrap">
+              <h3>Deep Cleanse Facial</h3>
+              <span class="svc-tag">Regular Facial</span>
+            </div>
+            <span class="svc-price">&#8358;15,000</span>
+          </div>
+          <div class="svc-desc-row">
+            <p>Our classic regular facial: thorough pore cleansing, gentle steam, exfoliation, and hydration to refresh everyday skin.</p>
+            <a class="btn-book-sm" href="booking.html?treatment=Deep%20Cleanse%20Facial">Book</a>
+          </div>
+        </div>
+
+        <!-- 2: Acne Facial -->
+        <div class="svc reveal">
+          <div class="svc-top">
+            <div class="svc-title-wrap">
+              <h3>Acne Facial</h3>
+              <span class="svc-tag">Pimples &amp; Blackheads</span>
+            </div>
+            <span class="svc-price">&#8358;25,000</span>
+          </div>
+          <div class="svc-desc-row">
+            <p>Targeted purifying treatment for those with pimples, stubborn blackheads, excess oil, and active breakouts.</p>
+            <a class="btn-book-sm" href="booking.html?treatment=Acne%20Facial">Book</a>
+          </div>
+        </div>
+
+        <!-- 3: Dermabrasion Facial -->
+        <div class="svc reveal">
+          <div class="svc-top">
+            <div class="svc-title-wrap">
+              <h3>Dermabrasion Facial</h3>
+              <span class="svc-tag">Deep Exfoliation</span>
+            </div>
+            <span class="svc-price">&#8358;25,000</span>
+          </div>
+          <div class="svc-desc-row">
+            <p>Medical-grade physical exfoliation that removes dead skin layers, refines rough texture, and minimizes scarring.</p>
+            <a class="btn-book-sm" href="booking.html?treatment=Dermabrasion%20Facial">Book</a>
+          </div>
+        </div>
+
+        <!-- 4: Hydra Facial -->
+        <div class="svc reveal">
+          <div class="svc-top">
+            <div class="svc-title-wrap">
+              <h3>Hydra Facial</h3>
+              <span class="svc-tag">Intense Glow</span>
+            </div>
+            <span class="svc-price">&#8358;35,000</span>
+          </div>
+          <div class="svc-desc-row">
+            <p>Vortex suction cleanses and extracts impurities while infusing intensive hyaluronic and antioxidant serums for an instant dew glow.</p>
+            <a class="btn-book-sm" href="booking.html?treatment=Hydra%20Facial">Book</a>
+          </div>
+        </div>
+
+        <!-- 5: Gem Anti-Aging Facial -->
+        <div class="svc reveal">
+          <div class="svc-top">
+            <div class="svc-title-wrap">
+              <h3>Gem Anti-Aging Facial</h3>
+              <span class="svc-tag">Collagen &amp; Firming</span>
+            </div>
+            <span class="svc-price">&#8358;40,000</span>
+          </div>
+          <div class="svc-desc-row">
+            <p>Luxury collagen-lifting therapy targeting fine lines, wrinkles, and skin elasticity using gemstone rollers and peptide infusions.</p>
+            <a class="btn-book-sm" href="booking.html?treatment=Gem%20Anti-Aging%20Facial">Book</a>
+          </div>
+        </div>
+
+        <!-- 6: Honey Body Polish -->
+        <div class="svc reveal">
+          <div class="svc-top">
+            <div class="svc-title-wrap">
+              <h3>Honey Body Polish</h3>
+              <span class="svc-tag">Silky Body Glow</span>
+            </div>
+            <span class="svc-price">&#8358;50,000</span>
+          </div>
+          <div class="svc-desc-row">
+            <p>Full-body natural raw honey exfoliation and gentle buffing, leaving your entire body soft, radiant, and deeply moisturized.</p>
+            <a class="btn-book-sm" href="booking.html?treatment=Honey%20Body%20Polish">Book</a>
+          </div>
+        </div>
+
+        <!-- 7: Asian Spa Bath -->
+        <div class="svc reveal">
+          <div class="svc-top">
+            <div class="svc-title-wrap">
+              <h3>Asian Spa Bath</h3>
+              <span class="svc-tag">Signature Luxury Ritual</span>
+            </div>
+            <span class="svc-price">&#8358;100,000</span>
+          </div>
+          <div class="svc-desc-row">
+            <p>An opulent, traditional full-body warm herbal soak and soak-scrub ritual in a private hydrotherapy suite for absolute renewal.</p>
+            <a class="btn-book-sm" href="booking.html?treatment=Asian%20Spa%20Bath">Book</a>
+          </div>
+        </div>
+
+        <!-- 8: Full Body Massage -->
+        <div class="svc reveal">
+          <div class="svc-top">
+            <div class="svc-title-wrap">
+              <h3>Full Body Relaxation Massage</h3>
+              <span class="svc-tag">Muscle Relief</span>
+            </div>
+            <span class="svc-price">&#8358;30,000</span>
+          </div>
+          <div class="svc-desc-row">
+            <p>Deep tissue and Swedish techniques to dissolve tension, soothe aching muscles, and restore full body mobility.</p>
+            <a class="btn-book-sm" href="booking.html?treatment=Full%20Body%20Relaxation%20Massage">Book</a>
+          </div>
+        </div>
+
+        <!-- 9: Pedicure & Manicure -->
+        <div class="svc reveal">
+          <div class="svc-top">
+            <div class="svc-title-wrap">
+              <h3>Pedicure &amp; Manicure</h3>
+              <span class="svc-tag">Hand &amp; Foot Care</span>
+            </div>
+            <span class="svc-price">&#8358;15,000</span>
+          </div>
+          <div class="svc-desc-row">
+            <p>Complete cuticle care, exfoliation, nail shaping, callus smoothing, and long-lasting professional polish.</p>
+            <a class="btn-book-sm" href="booking.html?treatment=Pedicure%20%26%20Manicure">Book</a>
+          </div>
+        </div>
+
+        <!-- 10: Full Body Wax -->
+        <div class="svc reveal">
+          <div class="svc-top">
+            <div class="svc-title-wrap">
+              <h3>Full Body Wax</h3>
+              <span class="svc-tag">Smooth Skin</span>
+            </div>
+            <span class="svc-price">&#8358;30,000</span>
+          </div>
+          <div class="svc-desc-row">
+            <p>Clean, thorough hair removal using sensitive-skin warm wax for smooth, silky skin from head to toe.</p>
+            <a class="btn-book-sm" href="booking.html?treatment=Full%20Body%20Wax">Book</a>
+          </div>
+        </div>
+      </div>
+      <div class="services-cta reveal" style="display:flex; gap:12px; flex-wrap:wrap; margin-top:32px;">
+        <a class="btn btn-green" href="booking.html">Book online now</a>
+        <a class="btn btn-whatsapp" href="https://wa.me/2348033524850?text=Hello%20D-ril%20Spa%2C%20I%20would%20like%20to%20inquire%20about%20your%20services." target="_blank" rel="noopener">Inquire via WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery" class="gallery-wrap">
+    <div class="wrap">
+      <div class="reveal">
+        <h2>Inside D-ril Spa</h2>
+        <p>Tap a photo to see it larger.</p>
+      </div>
+      <div class="gallery">
+        <figure class="reveal-scale"><button type="button" data-full="images/exterior.jpg" data-alt="D-ril Spa building and entrance"><img src="images/exterior.jpg" alt="D-ril Spa building and entrance" loading="lazy"></button><figcaption>Our building and entrance</figcaption></figure>
+        <figure class="reveal-scale"><button type="button" data-full="images/facial-room.jpg" data-alt="Therapist giving a facial treatment"><img src="images/facial-room.jpg" alt="Therapist giving a facial treatment" loading="lazy"></button><figcaption>The facial room</figcaption></figure>
+        <figure class="reveal-scale"><button type="button" data-full="images/massage-room.jpg" data-alt="Massage room with a prepared bed"><img src="images/massage-room.jpg" alt="Massage room with a prepared bed" loading="lazy"></button><figcaption>The massage room</figcaption></figure>
+        <figure class="reveal-scale"><button type="button" data-full="images/reception.jpg" data-alt="Reception and waiting area"><img src="images/reception.jpg" alt="Reception and waiting area" loading="lazy"></button><figcaption>Reception and waiting area</figcaption></figure>
+        <figure class="reveal-scale"><button type="button" data-full="images/passage.jpg" data-alt="Upstairs passage leading to the treatment rooms"><img src="images/passage.jpg" alt="Upstairs passage leading to the treatment rooms" loading="lazy"></button><figcaption>The passage to our treatment rooms</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Second Continuous Ambient Ticker Bar (Reverse Flow) - Runs All The Time -->
+  <div class="marquee-track marquee-track-reverse" aria-hidden="true">
+    <div class="marquee-group">
+      <span>Serenity &bull; Wellness &bull; Rejuvenation</span><span class="m-dot">&bull;</span>
+      <span>11 Okunola Abass Street, Off favos, New Bodija, Ibadan</span><span class="m-dot">&bull;</span>
+      <span>Certified Estheticians &amp; Spa Therapists</span><span class="m-dot">&bull;</span>
+      <span>Appointments &amp; Walk-ins Welcome</span><span class="m-dot">&bull;</span>
+      <span>Call +234 803 352 4850</span><span class="m-dot">&bull;</span>
+      <span>Instant WhatsApp Booking</span><span class="m-dot">&bull;</span>
+      <span>Mon &ndash; Sat: 9:00 AM &ndash; 7:00 PM</span><span class="m-dot">&bull;</span>
+      <span>Sunday: By Special Appointment</span><span class="m-dot">&bull;</span>
+    </div>
+    <div class="marquee-group" aria-hidden="true">
+      <span>Serenity &bull; Wellness &bull; Rejuvenation</span><span class="m-dot">&bull;</span>
+      <span>11 Okunola Abass Street, Off favos, New Bodija, Ibadan</span><span class="m-dot">&bull;</span>
+      <span>Certified Estheticians &amp; Spa Therapists</span><span class="m-dot">&bull;</span>
+      <span>Appointments &amp; Walk-ins Welcome</span><span class="m-dot">&bull;</span>
+      <span>Call +234 803 352 4850</span><span class="m-dot">&bull;</span>
+      <span>Instant WhatsApp Booking</span><span class="m-dot">&bull;</span>
+      <span>Mon &ndash; Sat: 9:00 AM &ndash; 7:00 PM</span><span class="m-dot">&bull;</span>
+      <span>Sunday: By Special Appointment</span><span class="m-dot">&bull;</span>
+    </div>
+  </div>
+
+  <section id="visit" class="visit">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="hero-badge" style="background: rgba(184, 212, 60, 0.2); margin-bottom: 12px;">Visit Our Sanctuary</span>
+        <h2>Ready when you are</h2>
+        <p style="color: #E2ECE5; max-width: 58ch; font-size: 1.05rem;">A quiet oasis for your skin and body wellness in Ibadan. Send your booking request online, or visit our studio in Bodija.</p>
+      </div>
+
+      <div class="location-card reveal">
+        <div class="loc-item">
+          <div class="loc-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          </div>
+          <div>
+            <div class="loc-label">Address</div>
+            <div class="loc-val">11 Okunola Abass Street, Off favos, New Bodija, Ibadan</div>
+          </div>
+        </div>
+
+        <div class="loc-item">
+          <div class="loc-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          </div>
+          <div>
+            <div class="loc-label">Opening Hours</div>
+            <div class="loc-val">Monday &ndash; Saturday: 9:00 AM &ndash; 7:00 PM<br>Sunday: 12:00 PM &ndash; 6:00 PM</div>
+          </div>
+        </div>
+
+        <div class="loc-item">
+          <div class="loc-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          </div>
+          <div>
+            <div class="loc-label">Telephone &amp; WhatsApp</div>
+            <div class="loc-val"><a href="tel:+2348033524850">+234 803 352 4850</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ctas reveal">
+        <a class="btn btn-lime" href="booking.html">Book online</a>
+        <a class="btn btn-whatsapp" href="https://wa.me/2348033524850" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.587 1.961.954 3.011.954l.002.001c3.182 0 5.77-2.587 5.771-5.766.001-1.543-.599-2.993-1.69-4.084-1.09-1.09-2.541-1.688-4.087-1.688zm7.32 4.095c.001 1.961-.762 3.805-2.148 5.191-1.387 1.387-3.231 2.15-5.191 2.15h-.002c-1.189 0-2.355-.32-3.374-.925l-3.736.98 1-3.64c-.663-1.066-1.013-2.298-1.012-3.562 0-3.649 2.97-6.619 6.621-6.619 1.768 0 3.431.689 4.68 1.939s1.94 2.912 1.94 4.681z"/></svg>
+          Chat on WhatsApp
+        </a>
+        <a class="btn btn-line" href="tel:+2348033524850">Call now</a>
+        <a class="btn btn-line" href="https://www.google.com/maps/search/?api=1&query=11+Okunola+Abass+Street,+Off+Favos,+New+Bodija,+Ibadan" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+          Get directions
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div class="footer-row">
+      <div>
+        <div class="footer-brand-title">D-ril Spa</div>
+        <p class="footer-address">
+          <strong>Address:</strong> 11 Okunola Abass Street, Off favos, New Bodija, Ibadan<br>
+          <strong>Tel:</strong> <a href="tel:+2348033524850" style="color:var(--lime); text-decoration:none;">+234 803 352 4850</a>
+        </p>
+      </div>
+      <div class="footer-nav">
+        <a href="#services">Services</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#visit">Visit us</a>
+        <a href="booking.html">Book Online</a>
+      </div>
+    </div>
+    <div class="footer-copy">
+      <div>&copy; <span id="yr"></span> D-ril Spa. All rights reserved.</div>
+      <div>Serenity &bull; Wellness &bull; Rejuvenation in Ibadan</div>
+    </div>
+  </div>
+</footer>
+
+<button id="back-to-top" aria-label="Back to top" title="Back to top">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<dialog id="lightbox" aria-label="Photo viewer">
+  <form method="dialog"><button>Close</button></form>
+  <img id="lightboxImg" src="" alt="">
+</dialog>
+
+<script>
+  document.getElementById("yr").textContent = new Date().getFullYear();
+  const box = document.getElementById("lightbox");
+  const boxImg = document.getElementById("lightboxImg");
+  document.querySelectorAll(".gallery button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      boxImg.src = b.dataset.full;
+      boxImg.alt = b.dataset.alt;
+      box.showModal();
+    });
+  });
+  box.addEventListener("click", function (e) { if (e.target === box) box.close(); });
+
+  // Scroll Progress, Scrolled Header, Parallax & Back-to-Top
+  const progressBar = document.getElementById("scroll-progress");
+  const backToTop = document.getElementById("back-to-top");
+  const header = document.querySelector("header");
+  const heroBg = document.querySelector(".hero img.bg");
+
+  window.addEventListener("scroll", function () {
+    const scrollY = window.scrollY;
+    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = totalHeight > 0 ? (scrollY / totalHeight) * 100 : 0;
+    if (progressBar) progressBar.style.width = progress + "%";
+
+    if (scrollY > 40) {
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
+    }
+
+    if (scrollY > 350) {
+      backToTop.classList.add("show");
+    } else {
+      backToTop.classList.remove("show");
+    }
+
+    // Continuous smooth hero parallax on scroll
+    if (heroBg && scrollY < window.innerHeight) {
+      heroBg.style.transform = "translate3d(0, " + (scrollY * 0.3) + "px, 0) scale(1.05)";
+    }
+  }, { passive: true });
+
+  if (backToTop) {
+    backToTop.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
+  // Continuous Scroll Reveal Animations - Re-triggers every time on scroll
+  const revealElements = document.querySelectorAll(".reveal, .reveal-scale");
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("reveal-visible");
+        } else {
+          // Re-arm animation when it leaves the viewport so it animates every time you scroll
+          entry.target.classList.remove("reveal-visible");
+        }
+      });
+    }, {
+      rootMargin: "0px 0px -30px 0px",
+      threshold: 0.08
+    });
+
+    revealElements.forEach(function (el) { observer.observe(el); });
+  } else {
+    revealElements.forEach(function (el) { el.classList.add("reveal-visible"); });
+  }
+
+  // Ensure continuous seamless marquee fill across all resolutions
+  document.querySelectorAll(".marquee-track").forEach(function(track) {
+    const group = track.querySelector(".marquee-group");
+    if (group && track.scrollWidth < window.innerWidth * 2) {
+      const clone = group.cloneNode(true);
+      clone.setAttribute("aria-hidden", "true");
+      track.appendChild(clone);
+    }
+  });
+</script>
+</body>
+</html>
